@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="crossorigin="anonymous"></script>
+
+    <title>Example Time!</title>
+</head>
+<body style="font-family: 'Montserrat'" class="bg-dark text-light">
+    <div class = "container">
+        <h1>Let's practice using HTTP with GET and POST</h1>
+        <hr>
+        <div>
+            <h2>Select the method you want the form to be:</h2>
+            
+                <input type="radio" id="get"  name="method" value="get">
+                <label for="get">GET</label>
+    
+                <input type="radio" id="post"  name="method" value="post">
+                <label for="post">POST</label><br>
+
+                <p id="methodInfo"></p>
+            
+        </div>
+
+        <hr>
+
+        <div class = "row">
+            <h2>Here's a div with a form inside:</h2>
+            <p style="font-weight:bold;">
+                keyword: 
+                <span id="keyword"><em>red balloon</em></span>
+            </p>
+            <p>Choose your favorite Web language, then type your first name, and then a hidden phrase:</p>
+
+            <form id="example_form" method="get" action="./results.html" target="_blank">
+                <input type="radio" id="html" name="fav_language" value="HTML">
+                <label for="html">HTML</label><br>
+                
+                <input type="radio" id="css" name="fav_language" value="CSS">
+                <label for="css">CSS</label><br>
+
+                <input type="radio" id="javascript" name="fav_language" value="JavaScript">
+                <label for="javascript">JavaScript</label><br>
+
+                <input type="text" id="name" name="name">
+                <label for="name">First Name</label><br>
+
+                <input type="password" id="phrase" name="phrase">
+                <label for="phrase">Hidden Phrase</label><br><br>
+                
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+</body>
+
+<script>
+    $(document).ready(function(){
+        $('input[type=radio][name="method"]').change(function() {
+            var method = $(this).val();
+            form.setAttribute("method", method);
+            
+            var color = "";
+
+            if(method == "post")
+                color = "#ff7f50";
+            else if(method == "get")
+                color = "#7fffd4";
+
+            var htmlText = `The form's method has been set to <span style="color:${color}">
+                                <strong>${method}</strong>.</span>`;
+            document.getElementById("methodInfo").innerHTML = htmlText;
+        });
+    });
+
+    function methodValueSet(){
+        var form = document.getElementById("example_form");
+        var methods = document.getElementsByName("method");
+
+        for(i = 0; i < methods.length;i++) {
+            if(methods[i].checked) {
+                form.setAttribute("method", methods[i].value);
+                document.getElementById("formInfo").innerHTML = 
+                    'The form has been set to <span style="color:red">' + methods[i].value + '</span>';
+            }
+        }
+    }
+
+    function handleSubmit(event) {
+        const data = new FormData(event.target);
+        var value = Object.fromEntries(data.entries());
+        value.keyword = document.getElementById("keyword").innerHTML;
+        
+        console.log({value});
+        sessionStorage.value = JSON.stringify(value);
+    }
+
+    const form = document.getElementById("example_form");
+    form.addEventListener('submit', handleSubmit);
+</script>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Form Takes You Here</title>
+</head>
+<body style="font-family: 'Montserrat'" class="bg-dark text-light">
+    <div class="container">
+
+        <h1>The form takes you to this page</h1>
+        <p>Here are the values from the previous page:</p>
+        <hr>
+        <div class="row">
+            <div class="col-md-8" id="left_column">
+                <p>JSON as a string:</p>
+                <pre id="myJSON"></pre>
+            </div>
+            
+            <div class="col-md-4">
+                <p>JSON values parsed to populate an HTML list:</p>
+                <ul>
+                    <li id="name"></li>
+                    <li id="fav_language"></li>
+                    <li id="keyword"></li>
+                    <li id="phrase"></li>
+                </ul>
+            </div>
+        </div>      
+    </div>
+</body>
+
+<script>
+    document.getElementById("myJSON").innerHTML = sessionStorage.value;
+
+    var myObject = JSON.parse(sessionStorage.value);
+    console.log({myObject});
+
+    document.getElementById("name").innerHTML         = `<strong>Name:              </strong>${myObject.name}`;
+    document.getElementById("fav_language").innerHTML = `<strong>Favorite Language: </strong>${myObject.fav_language}`;
+    document.getElementById("keyword").innerHTML      = `<strong>Keyword:           </strong>${myObject.keyword}`;
+    document.getElementById("phrase").innerHTML       = `<strong>Phrase:            </strong>${myObject.phrase}`;
+
+
+    // sets properties of border to match Bootstrap's <hr> element
+    var ruler = document.querySelector("hr");
+    color = window.getComputedStyle(ruler).getPropertyValue("border-color");
+    width = window.getComputedStyle(ruler).getPropertyValue("border-top-width");
+    document.getElementById("left_column").style.borderRight=`${width} solid rgba(248,249,250,0.25)`;
+    console.log(document.getElementById("left_column").style.borderRight);
+</script>
+</html>
